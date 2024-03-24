@@ -1,0 +1,24 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+  hostmetrics:
+    collection_interval: 1m
+    initial_delay: 1s
+    scrapers:
+      load:
+
+exporters:
+  debug:
+    verbosity: detailed
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp, hostmetrics]
+      processors: [batch]
+      exporters: [debug]
